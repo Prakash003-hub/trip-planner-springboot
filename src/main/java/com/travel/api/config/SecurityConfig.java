@@ -37,14 +37,13 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(request -> {
-                    var corsConfiguration = new org.springframework.web.cors.CorsConfiguration();
-                    corsConfiguration
-                            .setAllowedOrigins(java.util.List.of("http://localhost:5173", "http://localhost:3000"));
-                    corsConfiguration.setAllowedMethods(java.util.List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-                    corsConfiguration.setAllowedHeaders(java.util.List.of("*"));
-                    corsConfiguration.setAllowCredentials(true);
-                    return corsConfiguration;
-                }))
+    var corsConfiguration = new org.springframework.web.cors.CorsConfiguration();
+    corsConfiguration.setAllowedOriginPatterns(java.util.List.of("*")); 
+    corsConfiguration.setAllowedMethods(java.util.List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+    corsConfiguration.setAllowedHeaders(java.util.List.of("*"));
+    corsConfiguration.setAllowCredentials(true);
+    return corsConfiguration;
+}))
                 .authorizeHttpRequests(req -> req
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/uploads/**").permitAll()
